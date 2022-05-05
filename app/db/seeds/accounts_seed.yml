@@ -1,0 +1,10 @@
+---
+- username: test_01
+  email: test_1@nthu.edu.tw
+  password: mypa$$w0rd
+- username: test_02
+  email: test_2@nthu.edu.tw
+  password: randompass
+- username: test_03
+  email: test_3@nthu.edu.tw
+  password: passrand
