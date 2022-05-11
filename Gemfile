@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-
+ruby File.read('.ruby-version').strip
 # Web API
 gem 'json'
 gem 'puma', '~>5'
@@ -40,5 +40,10 @@ group :development, :test do
 end
 
 gem 'pg'
+gem 'zlib'
 # Quality
 gem 'rubocop'
+
+group :production do
+  gem 'pg'
+end

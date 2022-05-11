@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="5c1259d7-3113-4026-9763-3d19d57c1899" name="PostgreSQL - url-shortener@url-shortener.czbxdihuncsl.ap-southeast-1.rds.amazonaws.com Mapping">
+      <data-sources db="68405d88-3c8f-4b82-b626-d2e3e525d04b" />
+    </mapping>
+  </component>
+</project>

@@ -9,8 +9,8 @@ Sequel.migration do
       foreign_key :owner_id, :accounts
 
       String :short_url, unique: true, null: false
-      String :long_url, unique: true, null: false
-      String :description, unique: true
+      String :long_url, null: false
+      String :description
 
       DateTime :created_at
       DateTime :updated_at

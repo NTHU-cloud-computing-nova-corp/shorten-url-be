@@ -34,12 +34,14 @@ module UrlShortener
       # POST api/v1/urls
       routing.post do
         new_data = JSON.parse(routing.body.read)
+        new_data['short_url'] = UrlShortener::GenerateShortUrl.call
         new_proj = Url.new(new_data)
+
         raise('Could not save url') unless new_proj.save
 
         response.status = 201
         response['Location'] = "#{@proj_route}/#{new_proj.id}"
-        { message: 'Url saved', data: new_proj }.to_json
+        { message: 'URL saved', data: new_proj }.to_json
       rescue Sequel::MassAssignmentRestriction
         Api.logger.warn "MASS-ASSIGNMENT: #{new_data.keys}"
         routing.halt 400, { message: 'Illegal Attributes' }.to_json

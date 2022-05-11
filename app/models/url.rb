@@ -18,7 +18,7 @@ module UrlShortener
 
     plugin :timestamps
     plugin :whitelist_security
-    set_allowed_columns :long_url, :short_url, :description
+    set_allowed_columns :owner_id, :long_url, :short_url, :description
 
     def to_json(options = {})
       JSON(

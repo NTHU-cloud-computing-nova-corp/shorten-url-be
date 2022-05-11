@@ -65,9 +65,11 @@ GEM
     sqlite3 (1.4.2)
     thor (1.2.1)
     unicode-display_width (2.1.0)
+    zlib (2.1.1)
 
 PLATFORMS
   arm64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   bundler-audit
@@ -89,6 +91,10 @@ DEPENDENCIES
   sequel (~> 5)
   sequel-seed
   sqlite3
+  zlib
+
+RUBY VERSION
+   ruby 3.1.1p18
 
 BUNDLED WITH
    2.3.9
