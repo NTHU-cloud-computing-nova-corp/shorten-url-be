@@ -1,0 +1,9 @@
+---
+- code: O
+  description: 'Public: Anyone is able to access the URL'
+- code: P
+  description: 'Private: owner is able to access the URL'
+- code: S
+  description: 'Shared: Share the URL to assigned emails'
+- code: L
+  description: 'Locked: Anyone who has password can access the URL'

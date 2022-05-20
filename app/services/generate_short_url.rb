@@ -9,6 +9,7 @@ module UrlShortener
       valid = false
       until valid
         generated_url = Base64.urlsafe_encode64(RbNaCl::Random.random_bytes(6), padding: false)
+        generated_url = generated_url[0..4]
         data = Url.first(short_url: generated_url)
         valid = true if data.nil?
       end

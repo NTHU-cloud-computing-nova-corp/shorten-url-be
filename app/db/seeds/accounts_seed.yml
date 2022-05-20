@@ -1,7 +1,7 @@
 ---
-- username: test_01
+- username: ernesto
   email: test_1@nthu.edu.tw
-  password: mypa$$w0rd
+  password: admin
 - username: test_02
   email: test_2@nthu.edu.tw
   password: randompass

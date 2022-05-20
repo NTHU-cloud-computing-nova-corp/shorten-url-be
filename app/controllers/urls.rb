@@ -19,13 +19,22 @@ module UrlShortener
           output = { data: }
           JSON.pretty_generate(output)
         rescue StandardError
-          routing.halt(404, { message: 'Could not find documents' }.to_json)
+          routing.halt(404, { message: 'Could not find Url' }.to_json)
+        end
+
+        routing.post 'delete' do
+          raise('Could not delete Url') unless Url.where(short_url:).delete
+
+          response.status = 200
+          response['Location'] = "#{@url_route}/#{short_url}/delete"
+          { message: 'Url has been deleted' }.to_json
         end
       end
 
       # GET api/v1/urls
       routing.get do
-        output = { data: Url.all }
+        account = Account.first(username: @auth_account['username'])
+        output = { data: Url.where(account_id: account.id).all }
         JSON.pretty_generate(output)
       rescue StandardError
         routing.halt 404, { message: 'Could not find urls' }.to_json
@@ -33,15 +42,16 @@ module UrlShortener
 
       # POST api/v1/urls
       routing.post do
+        account = Account.first(username: @auth_account['username'])
+
         new_data = JSON.parse(routing.body.read)
         new_data['short_url'] = UrlShortener::GenerateShortUrl.call
-        new_proj = Url.new(new_data)
+        new_data['account_id'] = account.id
+        url = Url.new(new_data)
+        raise('Could not save url') unless url.save
 
-        raise('Could not save url') unless new_proj.save
-
-        response.status = 201
-        response['Location'] = "#{@proj_route}/#{new_proj.id}"
-        { message: 'URL saved', data: new_proj }.to_json
+        response.status = 200
+        url.to_json
       rescue Sequel::MassAssignmentRestriction
         Api.logger.warn "MASS-ASSIGNMENT: #{new_data.keys}"
         routing.halt 400, { message: 'Illegal Attributes' }.to_json

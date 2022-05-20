@@ -5,11 +5,13 @@ require 'sequel'
 Sequel.migration do
   change do
     create_table(:urls) do
-      primary_key :id
-      foreign_key :owner_id, :accounts
+      uuid :id, primary_key: true
+      foreign_key :account_id, table: :accounts, type: :uuid, null: false
 
       String :short_url, unique: true, null: false
       String :long_url, null: false
+      String :status_code, null: false, default: 'O'
+      String :tags, default: 'Document'
       String :description
 
       DateTime :created_at
