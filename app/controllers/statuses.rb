@@ -2,9 +2,9 @@
 
 require_relative './app'
 
-# General ETestament module
+# General UrlShortener module
 module UrlShortener
-  # Web controller for ETestament API, properties sub-route
+  # Web controller for UrlShortener API, properties sub-route
   class Api < Roda
     route('statuses') do |routing|
       # GET api/v1/statuses

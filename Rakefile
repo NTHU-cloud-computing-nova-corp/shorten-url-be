@@ -84,7 +84,9 @@ namespace :db do
 
   task :reset_seeds => :load_models do
     @app.DB[:schema_seeds].delete if @app.DB.tables.include?(:schema_seeds)
+    UrlShortener::EmailUrl.dataset.destroy
     UrlShortener::Account.dataset.destroy
+    UrlShortener::Url.dataset.destroy
   end
 
   desc 'Seeds the development database'
