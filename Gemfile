@@ -6,6 +6,7 @@ ruby File.read('.ruby-version').strip
 # Web API
 gem 'json'
 gem 'puma', '~>5'
+gem 'rack', '>= 2.2.3.1'
 gem 'roda', '~>3'
 
 # Configuration
