@@ -11,6 +11,19 @@ module UrlShortener
       @account = Account.first(username: @auth_account['username'])
       @url_route = "#{@api_root}/urls"
 
+      routing.get 'shared_urls' do
+        urls = UrlShortener::EmailUrl.where(email: @account[:email]).all
+        urls = urls.map do |u|
+          url = u.urls
+
+          { id: url[:id], long_url: url[:long_url],
+            short_url: url[:short_url], status_code: url[:status_code],
+            description: url[:description], tags: url[:tags].nil? ? '' : url[:tags] }
+        end
+        url_list = urls.select { |l| l[:status_code] == 'S' }
+        JSON.pretty_generate({ data: url_list })
+      end
+
       routing.on String do |short_url|
         @url = Url.first(short_url:, account_id: @account[:id])
         raise Exceptions::NotFoundError if @url.nil?
@@ -40,7 +53,6 @@ module UrlShortener
           response['Location'] = "#{@url_route}/#{short_url}/lock"
         end
 
-
         # POST api/v1/urls/:short_url/privatise :: Privatise an url
         routing.post 'privatise' do
           @url.update(status_code: 'P')
@@ -65,6 +77,17 @@ module UrlShortener
           { message: 'Url is shared' }.to_json
         end
 
+        routing.post 'invite' do
+          request_data = JSON.parse(routing.body.read)
+          emails = request_data['emails']
+          Services::Urls::SendInvitation.new(@account[:email], emails, short_url, @url[:description],
+request_data['message']).call
+
+          response.status = 200
+          response['Location'] = "#{@url_route}/#{short_url}/invite"
+          { message: 'Emails invited' }.to_json
+        end
+
         # POST api/v1/urls :: Update an url
         routing.post 'update' do
           updated_data = JSON.parse(routing.body.read)
@@ -77,6 +100,7 @@ module UrlShortener
 
         # POST api/v1/urls/:short_url/delete :: Delete an url
         routing.post 'delete' do
+          raise('Could not delete Url') unless EmailUrl.where(url_id: @url[:id]).delete
           raise('Could not delete Url') unless @url.delete
 
           response.status = 200
@@ -92,7 +116,6 @@ module UrlShortener
           response['Location'] = "#{@url_route}/#{short_url}/delete"
           { message: 'Url has been deleted' }.to_json
         end
-
       end
 
       # GET api/v1/urls
