@@ -21,7 +21,7 @@ gem 'rbnacl', '~>7'
 gem 'hirb', '~>0'
 gem 'sequel', '~>5'
 
-group :production do
+group :production, :test do
   gem 'pg'
 end
 
@@ -47,9 +47,8 @@ group :development do
   gem 'rubocop-performance'
 end
 
-group :development, :test do
+group :development do
   gem 'sequel-seed'
-  gem 'sqlite3'
 end
 
 # OAuth
