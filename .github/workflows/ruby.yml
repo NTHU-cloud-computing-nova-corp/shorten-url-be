@@ -36,4 +36,4 @@ jobs:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Run migrate
       run: rake db:migrate
-    - run: rake spec
+    - run: rake test
