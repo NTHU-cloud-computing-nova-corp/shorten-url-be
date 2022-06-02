@@ -2,6 +2,7 @@
 
 require 'roda'
 require_relative './app'
+require 'google/apis/gmail_v1'
 
 module UrlShortener
   # Web controller for UrlShortener API
@@ -32,6 +33,18 @@ module UrlShortener
           auth_account = Services::Accounts::Authenticate.call(credentials)
           auth_account.to_json
         rescue Services::Accounts::Authenticate::UnauthorizedError, StandardError
+          Api.logger.error 'Invalid credentials'
+
+          routing.halt '403', { message: 'Invalid credentials' }.to_json
+        end
+      end
+      routing.is 'authenticate-sso' do
+        # POST /api/v1/auth/authenticate
+        routing.post do
+          credentials = JsonRequestBody.parse_symbolize(request.body.read)
+          auth_account = Services::Accounts::AuthenticateSSO.call(credentials)
+          auth_account.to_json
+        rescue Services::Accounts::AuthenticateSSO::UnauthorizedError, StandardError
           Api.logger.error 'Invalid credentials'
 
           routing.halt '403', { message: 'Invalid credentials' }.to_json

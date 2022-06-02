@@ -51,3 +51,5 @@ group :development, :test do
   gem 'sqlite3'
 end
 
+# OAuth
+gem 'google-api-client'

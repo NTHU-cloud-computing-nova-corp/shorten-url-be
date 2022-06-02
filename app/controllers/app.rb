@@ -17,11 +17,27 @@ module UrlShortener
     def check_authentication(routing)
       begin
         @auth_account = authenticated_account(routing.headers)
-      rescue AuthToken::InvalidTokenError
-        routing.halt 403, { message: 'Invalid auth token' }.to_json
-      rescue StandardError
-        routing.halt 401, { message: 'Invalid username or password' }.to_json
       end
+    end
+
+    def check_shared_email(routing, url)
+
+      check_authentication(routing)
+      raise Exceptions::ForbiddenError if @auth_account.nil?
+
+      account = Account.first(username: @auth_account['username'])
+      if Url.first(id: url[:id], account_id: account[:id]).nil? &&
+         EmailUrl.first(url_id: url[:id], email: account[:email]).nil?
+        raise Exceptions::ForbiddenError, "You don't have permission for this URL"
+      end
+    end
+
+    def check_private_email(routing, short_url)
+      check_authentication(routing)
+      raise Exceptions::ForbiddenError if @auth_account.nil?
+
+      account = Account.first(username: @auth_account['username'])
+      raise Exceptions::ForbiddenError if account.urls.find(short_url:).first.nil?
     end
 
     route do |routing|
@@ -57,9 +73,11 @@ module UrlShortener
         routing.get do
           case @url[:status_code]
           when 'O', 'L'
-            puts "Open"
-          when 'S', 'P'
-            check_authentication(routing)
+            puts 'Open'
+          when 'S'
+            check_shared_email(routing, @url)
+          when 'P'
+            check_private_email(routing, @url)
           else
             routing.halt 403, { message: 'Invalid credentials' }.to_json
           end
@@ -67,8 +85,6 @@ module UrlShortener
           response.status = 200
           response['Location'] = "/#{short_url}"
           { data: @url, status: 200 }.to_json
-        rescue StandardError => e
-          routing.halt 404, { message: e.message }.to_json
         end
       end
 
@@ -76,7 +92,7 @@ module UrlShortener
       Api.logger.warn "MASS-ASSIGNMENT: #{e.message}"
       routing.halt 400, { message: 'Illegal Attributes' }.to_json
     rescue Exceptions::NotFoundError, Exceptions::BadRequestError,
-           Exceptions::ForbiddenError, JSON::ParserError => e
+      Exceptions::ForbiddenError, JSON::ParserError => e
       status_code = e.instance_variable_get(:@status_code)
       routing.halt status_code, { code: status_code, message: "Error: #{e.message}" }.to_json
     rescue StandardError => e

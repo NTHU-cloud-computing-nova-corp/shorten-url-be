@@ -23,12 +23,12 @@ module UrlShortener
           routing.halt(404, { message: 'Could not find Url' }.to_json)
         end
 
-        # POST api/v1/urls/:short_url/opened :: Open an url
-        routing.post 'opened' do
+        # POST api/v1/urls/:short_url/open :: Open an url
+        routing.post 'open' do
           @url.update(status_code: 'O')
 
           response.status = 200
-          response['Location'] = "#{@url_route}/#{short_url}/opened"
+          response['Location'] = "#{@url_route}/#{short_url}/open"
         end
 
         # POST api/v1/urls/:short_url/lock :: Lock an url
@@ -39,7 +39,6 @@ module UrlShortener
           response.status = 200
           response['Location'] = "#{@url_route}/#{short_url}/lock"
         end
-
 
 
         # POST api/v1/urls/:short_url/privatise :: Privatise an url
@@ -55,6 +54,7 @@ module UrlShortener
           @url.update(status_code: 'S')
 
           updated_data = JSON.parse(routing.body.read)
+          EmailUrl.where(url_id: @url[:id]).delete
           updated_data['emails'].split(',').each do |email|
             email = @url.add_shared_email(email:)
             raise StandardError unless email.save

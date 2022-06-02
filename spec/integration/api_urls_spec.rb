@@ -97,13 +97,13 @@ describe 'Test Url Handling' do
       _(last_response.header['Location']).must_be_nil
     end
   end
-  describe 'POST api/v/urls/:short_url/opened :: Open an url' do
+  describe 'POST api/v/urls/:short_url/open :: Open an url' do
     it 'HAPPY: should be able to open url' do
       # given
       @url.update(status_code: 'P')
 
       # when
-      post "api/v1/urls/#{@url[:short_url]}/opened", {}, @req_header
+      post "api/v1/urls/#{@url[:short_url]}/open", {}, @req_header
 
       # then
       _(last_response.status).must_equal 200
