@@ -74,7 +74,6 @@
     <orderEntry type="library" scope="PROVIDED" name="sequel (v5.57.0, rbenv: 3.1.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sequel-seed (v1.1.2, rbenv: 3.1.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="signet (v0.16.1, rbenv: 3.1.1) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="sqlite3 (v1.4.2, rbenv: 3.1.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="thor (v1.2.1, rbenv: 3.1.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="trailblazer-option (v0.1.2, rbenv: 3.1.1) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="tzinfo (v2.0.4, rbenv: 3.1.1) [gem]" level="application" />
@@ -86,42 +85,7 @@
   </component>
   <component name="RakeTasksCache">
     <option name="myRootTask">
-      <RakeTaskImpl id="rake">
-        <subtasks>
-          <RakeTaskImpl description="Tests API specs only" fullCommand="api_spec" id="api_spec" />
-          <RakeTaskImpl description="Update vulnerabilities lit and audit gems" fullCommand="audit" id="audit" />
-          <RakeTaskImpl description="Run application console (pry)" fullCommand="console" id="console" />
-          <RakeTaskImpl id="db">
-            <subtasks>
-              <RakeTaskImpl description="Destroy data in database; maintain tables" fullCommand="db:delete" id="delete" />
-              <RakeTaskImpl description="Delete dev or test database file" fullCommand="db:drop" id="drop" />
-              <RakeTaskImpl description="Run migrations" fullCommand="db:migrate" id="migrate" />
-              <RakeTaskImpl description="Delete all data and reseed" fullCommand="db:reseed" id="reseed" />
-              <RakeTaskImpl description="Seeds the development database" fullCommand="db:seed" id="seed" />
-              <RakeTaskImpl description="" fullCommand="db:load" id="load" />
-              <RakeTaskImpl description="" fullCommand="db:load_models" id="load_models" />
-              <RakeTaskImpl description="" fullCommand="db:reset_seeds" id="reset_seeds" />
-            </subtasks>
-          </RakeTaskImpl>
-          <RakeTaskImpl id="newkey">
-            <subtasks>
-              <RakeTaskImpl description="Create sample cryptographic key for database" fullCommand="newkey:db" id="db" />
-              <RakeTaskImpl description="Create sample cryptographic key for tokens and messaging" fullCommand="newkey:msg" id="msg" />
-            </subtasks>
-          </RakeTaskImpl>
-          <RakeTaskImpl description="Checks for release" fullCommand="release?" id="release?" />
-          <RakeTaskImpl description="Rerun tests on live code changes" fullCommand="respec" id="respec" />
-          <RakeTaskImpl id="run">
-            <subtasks>
-              <RakeTaskImpl description="Run API in development mode" fullCommand="run:dev" id="dev" />
-            </subtasks>
-          </RakeTaskImpl>
-          <RakeTaskImpl description="Run tests for spec" fullCommand="spec" id="spec" />
-          <RakeTaskImpl description="Runs rubocop on tested code" fullCommand="style" id="style" />
-          <RakeTaskImpl description="" fullCommand="default" id="default" />
-          <RakeTaskImpl description="" fullCommand="print_env" id="print_env" />
-        </subtasks>
-      </RakeTaskImpl>
+      <RakeTaskImpl id="rake" />
     </option>
   </component>
 </module>
