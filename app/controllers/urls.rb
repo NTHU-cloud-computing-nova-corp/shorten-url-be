@@ -81,7 +81,7 @@ module UrlShortener
           request_data = JSON.parse(routing.body.read)
           emails = request_data['emails']
           Services::Urls::SendInvitation.new(@account[:email], emails, short_url, @url[:description],
-request_data['message']).call
+                                             request_data['message']).call
 
           response.status = 200
           response['Location'] = "#{@url_route}/#{short_url}/invite"
