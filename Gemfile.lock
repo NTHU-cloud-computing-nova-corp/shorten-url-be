@@ -139,7 +139,6 @@ GEM
       faraday (>= 0.17.5, < 3.0)
       jwt (>= 1.5, < 3.0)
       multi_json (~> 1.10)
-    sqlite3 (1.4.2)
     thor (1.2.1)
     trailblazer-option (0.1.2)
     tzinfo (2.0.4)
@@ -177,7 +176,6 @@ DEPENDENCIES
   rubocop-performance
   sequel (~> 5)
   sequel-seed
-  sqlite3
 
 RUBY VERSION
    ruby 3.1.1p18

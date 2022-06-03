@@ -4,7 +4,7 @@
 require 'rake/testtask'
 require './require_app'
 
-task :default => :spec
+task :default => :test
 
 desc 'Tests API specs only'
 task :api_spec do
@@ -12,7 +12,7 @@ task :api_spec do
 end
 
 desc 'Test all the specs'
-Rake::TestTask.new(:spec) do |t|
+Rake::TestTask.new(:test) do |t|
   t.pattern = 'spec/**/*_spec.rb'
   t.warning = false
 end
@@ -23,7 +23,7 @@ task :respec do
 end
 
 desc 'Runs rubocop on tested code'
-task :style => [:spec, :audit] do
+task :style => [:test, :audit] do
   sh 'rubocop .'
 end
 
@@ -33,7 +33,7 @@ task :audit do
 end
 
 desc 'Checks for release'
-task :release? => [:spec, :style, :audit] do
+task :release? => [:test, :style, :audit] do
   puts "\nReady for release!"
 end
 
