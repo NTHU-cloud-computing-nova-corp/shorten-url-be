@@ -49,6 +49,7 @@ end
 
 group :development do
   gem 'sequel-seed'
+  gem 'sqlite3'
 end
 
 # OAuth
