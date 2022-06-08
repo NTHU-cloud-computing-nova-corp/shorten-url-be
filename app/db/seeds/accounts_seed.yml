@@ -1,10 +1,10 @@
 ---
 - username: ernesto
   email: test_1@nthu.edu.tw
-  password: admin
-- username: test_02
+  password: P@ssw0rd
+- username: ernesto_test
   email: test_2@nthu.edu.tw
-  password: randompass
+  password: MYP@ssw0rd
 - username: test_03
   email: test_3@nthu.edu.tw
   password: passrand

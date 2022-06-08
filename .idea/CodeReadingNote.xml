@@ -3,6 +3,12 @@
   <component name="CodeReadingNote">
     <topics>
       <topic>
+        <name>RBENV_VERSION=3.1.2</name>
+        <note />
+        <updatedAt>2022-06-04 12:11:59</updatedAt>
+        <topicLines />
+      </topic>
+      <topic>
         <name>call post url</name>
         <note>post '/api/v1/urls', '{&quot;owner_id&quot;:1,&quot;long_url&quot;:&quot;xxxxxxxxxxxxxxxxxx&quot;,&quot;description&quot;:&quot;description&quot;}'</note>
         <updatedAt>2022-05-05 23:55:52</updatedAt>

@@ -120,7 +120,7 @@ module UrlShortener
 
       # GET api/v1/urls
       routing.get do
-        output = { data: @account.urls }
+        output = { data: UrlShortener::Url.where(account_id: @account[:id]).order(Sequel.desc(:updated_at)).all }
         JSON.pretty_generate(output)
       rescue StandardError
         routing.halt 404, { message: 'Could not find urls' }.to_json
