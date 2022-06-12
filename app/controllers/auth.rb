@@ -33,7 +33,7 @@ module UrlShortener
           auth_account = Services::Accounts::Authenticate.call(credentials)
           auth_account.to_json
         rescue Services::Accounts::Authenticate::UnauthorizedError, StandardError
-          Api.logger.error 'Invalid credentials'
+          Api.logger.error 'Invalid credentials' if UrlShortener::Api.environment == :production
 
           routing.halt '403', { message: 'Invalid credentials' }.to_json
         end

@@ -107,15 +107,6 @@ module UrlShortener
           response['Location'] = "#{@url_route}/#{short_url}/delete"
           { message: 'Url has been deleted' }.to_json
         end
-
-        # POST api/v1/urls/:short_url/send_invitation :: Send invitation to emails
-        routing.post 'send_invitation' do
-          raise('Could not delete Url') unless @url.delete
-
-          response.status = 200
-          response['Location'] = "#{@url_route}/#{short_url}/delete"
-          { message: 'Url has been deleted' }.to_json
-        end
       end
 
       # GET api/v1/urls
